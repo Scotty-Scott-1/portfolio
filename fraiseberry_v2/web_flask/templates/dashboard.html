@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+		<link rel='stylesheet' href="../static/dashboard.css">
+
+		<title>Fraiserry dashboard {{ user.user_name }}</title>
+	</head>
+
+
+
+		<body class="container">
+
+			<header>
+				<div class="profilepic_icon">
+					<div class="popcontainter">
+						<img src="../static/images/profilepic_icon.png" alt="" >
+						<button id="pp"></button>
+					</div>
+				</div>
+				<div class="fraise">
+					<img src="../static/images/icon.png" alt="">
+					<h1>Fraiseberry Home</h1>
+				</div>
+				<img src="../static/images/mailbox_icon.png" alt="" class="mail">
+
+			</header>
+			<section id="popover">
+				<button id="closepop">x</button>
+				<p>
+					Logout
+				</p>
+			</section>
+			<main>
+				<div class="icon">
+					<img src="../static/images/camera_icon.png">
+				</div>
+				<div class="icon">
+					<img src="../static/images/network_icon.png">
+				</div>
+
+			</main>
+			<footer>
+				<div class="icon">
+					<img src="../static/images/user_icon.png">
+				</div>
+				<div class="icon">
+					<img src="../static/images/notes_icon.png">
+				</div>
+				<div class="icon">
+					<img src="../static/images/messages_icon.png">
+				</div>
+				<div class="icon">
+					<img src="../static/images/heart_icon.png">
+				</div>
+			</footer>
+			<script>
+				const popbutton = document.getElementById("pp");
+				const pop = document.getElementById("popover")
+				const closepop = document.getElementById("closepop")
+
+				popbutton.addEventListener("click", () => {
+					if (pop.style.display="none") {
+						pop.style.display= "block";
+					}
+					});
+				closepop.addEventListener("click", () => {
+					if (pop.style.display="block") {
+						pop.style.display="none"
+					}
+				});
+
+
+
+
+
+			</script>
+		</body>
+
+
+		</html>

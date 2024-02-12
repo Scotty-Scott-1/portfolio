@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+		<link rel='stylesheet' href="../static/signup.css">
+
+		<title>Welcome to Fraiseberry</title>
+	</head>
+
+
+
+		<body class="container">
+			<header>
+				<img class="header-item-img" src="../static/images/icon.png" alt="">
+				<h1 class="header-item">Fraiseberry</h1>
+			</header>
+			<main>
+				<input type="text" placeholder="enter your username" name="user_name">
+				<input type="password" placeholder="enter your password" name="password">
+				<button class="tweet-button" onclick="makeRequest()">Sign in</button>
+
+				<script>
+					function makeRequest() {
+
+						const form_data = {
+							user_name: document.querySelector('input[name="user_name"]').value,
+							user_password: document.querySelector('input[name="password"]').value,
+						};
+
+						fetch("/signin", {
+							method: "POST",
+							body: JSON.stringify(form_data),
+							headers: {"Content-Type": "application/json"}
+
+						})
+
+						.then(response => response.json())
+						.then(data =>window.location.href = "/dashboard")
+						.catch(error => console.error('Error:', error));
+					}
+				</script>
+			</main>
+			<footer></footer>
+		</body>
+
+
+		</html>
