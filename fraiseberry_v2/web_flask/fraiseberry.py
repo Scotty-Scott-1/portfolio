@@ -31,7 +31,7 @@ Session = sessionmaker(bind=engine)
 
 @app.route('/', strict_slashes=False)
 def home():
-
+    logged_in_session.clear()
     return render_template('homepage.html')
 
 @app.route('/signin', strict_slashes=False, methods=['GET', 'POST'])
@@ -82,7 +82,6 @@ def dashboard():
     session = Session()
     user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
     return render_template('dashboard.html', user=user)
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')

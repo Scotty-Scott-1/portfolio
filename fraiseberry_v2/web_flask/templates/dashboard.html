@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 		<link rel='stylesheet' href="../static/dashboard.css">
+		<script src="../static/dynamic/dashboard.js"></script>
 
 		<title>Fraiserry dashboard {{ user.user_name }}</title>
 	</head>
@@ -13,25 +14,30 @@
 		<body class="container">
 
 			<header>
-				<div class="profilepic_icon">
-					<div class="popcontainter">
-						<img src="../static/images/profilepic_icon.png" alt="" >
-						<button id="pp"></button>
-					</div>
+			</div>
+
+			<div class="fraise">
+				<img src="../static/images/icon.png" alt="">
+				<h1>Fraiseberry Home</h1>
+			</div>
+
+			<img src="../static/images/mailbox_icon.png" alt="" class="mail">
+
+			<div class="profilepic_icon">
+				<div class="popcontainter">
+					<img src="../static/images/profilepic_icon.png" alt="" >
+					<button id="pp"></button>
+					<section id="popover">
+						<ul>
+							<li><a href="/" id="logout">Logout</a></li>
+							<li>about</li>
+						</ul>
+					</section>
 				</div>
-				<div class="fraise">
-					<img src="../static/images/icon.png" alt="">
-					<h1>Fraiseberry Home</h1>
-				</div>
-				<img src="../static/images/mailbox_icon.png" alt="" class="mail">
+			</div>
+
 
 			</header>
-			<section id="popover">
-				<button id="closepop">x</button>
-				<p>
-					Logout
-				</p>
-			</section>
 			<main>
 				<div class="icon">
 					<img src="../static/images/camera_icon.png">
@@ -55,27 +61,6 @@
 					<img src="../static/images/heart_icon.png">
 				</div>
 			</footer>
-			<script>
-				const popbutton = document.getElementById("pp");
-				const pop = document.getElementById("popover")
-				const closepop = document.getElementById("closepop")
-
-				popbutton.addEventListener("click", () => {
-					if (pop.style.display="none") {
-						pop.style.display= "block";
-					}
-					});
-				closepop.addEventListener("click", () => {
-					if (pop.style.display="block") {
-						pop.style.display="none"
-					}
-				});
-
-
-
-
-
-			</script>
 		</body>
 
 

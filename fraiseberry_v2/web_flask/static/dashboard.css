@@ -7,8 +7,6 @@
 
 }
 
-
-
 header {
 	display: flex;
 	width: 100%;
@@ -37,38 +35,14 @@ header h1{
 	justify-content: center;
 }
 
-.popcontainter {
-	position: relative;
-}
-
-#pp {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 50px;
-	width: 50px;
-	border: none;
-	cursor: pointer;
-	background-color: transparent;
 
 
-}
+
 .mail {
 	justify-content: flex-start;
 }
 
 
-#popover {
-	position: absolute;
-	background-color: bisque;
-	border: 1px solid skyblue;
-	display: none;
-	top: 10;
-}
-
-.hidden {
-	display: none;
-}
 
 main {
 	flex-grow: 1;
@@ -102,3 +76,36 @@ footer .icon {
 	width: 64px;
 }
 
+.popcontainter {
+	position: relative;
+	width: fit-content;
+}
+
+#pp {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 50px;
+	width: 50px;
+	border: none;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+#popover {
+	position: absolute;
+	background-color: bisque;
+	border: 1px solid skyblue;
+	display: none;
+	top: 10;
+	right: 10px;
+	}
+
+.hidden {
+	display: none;
+	}
+
+ul li {
+	padding-right: 5px;
+	justify-content: center;
+	}
