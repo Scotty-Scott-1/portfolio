@@ -13,6 +13,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from create_tables import Users
+from create_tables import User_preferences
 from sys import argv
 
 
@@ -82,6 +83,30 @@ def dashboard():
     session = Session()
     user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
     return render_template('dashboard.html', user=user)
+
+@app.route('/preferences/', strict_slashes=False, methods=['GET', 'POST'])
+def preferences():
+    session = Session()
+    preferences = session.query(User_preferences).filter_by(user_id=logged_in_session.get("user_id")).first()
+    if request.method == "GET":
+        return render_template('update-preferences.html', preferences=preferences)
+    elif request.method == 'POST':
+        if preferences:
+            form_data = request.json
+            preferences.min_age = form_data["min_age"]
+            preferences.max_age = form_data["max_age"]
+            session.commit()
+            session.close()
+            return {"sucess": "updated exiting preferences"}
+        else:
+            form_data = request.json
+            new_preferences = User_preferences(**form_data)
+            new_preferences.user_id = logged_in_session["user_id"]
+            with Session() as session:
+                session.add(new_preferences)
+                session.commit()
+                return {"Success": "created new preferences"}
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')

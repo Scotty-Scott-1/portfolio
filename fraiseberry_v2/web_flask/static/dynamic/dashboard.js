@@ -1,12 +1,17 @@
 
 document.addEventListener("DOMContentLoaded", function() {
 	const popbutton = document.getElementById("pp");
-	const logout = document.getElementById("logout");
+	const pref_icon = document.getElementById("prefs");
 
 	popbutton.addEventListener("click", () => {
 		showPopover();
 	});
+
+	pref_icon.addEventListener("click", () => {
+		window.location.href="/preferences/"
+	});
 });
+
 
 
 
