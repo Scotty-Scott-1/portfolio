@@ -95,17 +95,27 @@ def preferences():
             form_data = request.json
             preferences.min_age = form_data["min_age"]
             preferences.max_age = form_data["max_age"]
+            preferences.distance = form_data["distance"]
+            preferences.gender = form_data["gender"]
+            preferences.intentions = form_data["intentions"]
             session.commit()
             session.close()
-            return {"sucess": "updated exiting preferences"}
+            return {"success": "updated exiting preferences"}
         else:
             form_data = request.json
-            new_preferences = User_preferences(**form_data)
-            new_preferences.user_id = logged_in_session["user_id"]
-            with Session() as session:
-                session.add(new_preferences)
-                session.commit()
-                return {"Success": "created new preferences"}
+            new_preferences = User_preferences()
+            new_preferences.min_age = form_data["min_age"]
+            new_preferences.max_age = form_data["max_age"]
+            new_preferences.distance = form_data["distance"]
+            new_preferences.gender = form_data["gender"]
+            new_preferences.intentions = form_data["intentions"]
+            new_preferences.user_id = logged_in_session.get("user_id")
+            print("AAAAAAAAAAAAAAAAAAAAAAAA")
+            print(logged_in_session.get("user_id"))
+            session.add(new_preferences)
+            session.commit()
+            session.close()
+            return {"Success": "created new preferences"}
 
 
 if __name__ == '__main__':

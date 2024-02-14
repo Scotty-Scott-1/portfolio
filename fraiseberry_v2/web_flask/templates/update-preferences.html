@@ -18,7 +18,8 @@
 			</header>
 			<main>
 		<p>
-			When the pool of potential matches will be filtered by the preferences you choose.
+			The pool of potential matches will be filtered by the preferences you choose.
+			Find compatibilty and real relationships
 		</p>
 
 		<div class="box">
@@ -32,22 +33,22 @@
 			<div class="input-box">
 				<input type="range" min="18" max="100" step="1" name="min_age" id="min_age" value="{{ preferences.min_age }}">
 				<input type="range" min="18" max="100" step="1"  name="max_age" id="max_age" value="{{ preferences.min_age }}">
-				<input type="range" min="1" max="10000" step="1"  name="distance" id="distance">
+				<input type="range" min="1" max="1000" step="1"  name="distance" id="distance">
 				<select class ="input" name="intent" id="intent">
-					<option value="Romantic relationship">Romantic relationship</option>
-					<option value="Friendship">Friendship</option>
+					<option value="Romantic relationship" {% if preferences.intentions == "Romantic relationship" %} selected {% endif %}>Romantic relationship</option>
+					<option value="Friendship" {% if preferences.intentions == "Friendship" %} selected {% endif %}>Friendship</option>
 				</select>
 				<select class="input" name="gender" id="gender">
-					<option value="Male">Male</option>
-					<option value="Female">Female</option>
-					<option value="Non binary">Non binary</option>
-					<option value="Other">Other</option>
+					<option value="Male" {% if preferences.gender == "Male" %} selected {% endif %}>Male</option>
+					<option value="Female"{% if preferences.gender == "Female" %} selected {% endif %}>Female</option>
+					<option value="Non binary" {% if preferences.gender == "Non binary" %} selected {% endif %}>Non binary</option>
+					<option value="Other" {% if preferences.gender == "Other" %} selected {% endif %}>Other</option>
 				</select>
 			</div>
 			<div class="value-box">
 				<p id="age_value">{{ preferences.min_age }}</p>
 				<p id="age_value_max">{{ preferences.max_age }}</p>
-				<p id="distance_value"> </p>
+				<p id="distance_value">{{ preferences.distance }}</p>
 			</div>
 		</div>
 		<div>

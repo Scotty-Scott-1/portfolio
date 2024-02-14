@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const distannce = document.getElementById("distance");
 	const distanceValue = document.getElementById("distance_value");
 	const saveButton = document.getElementById("save-button");
+	const backButton = document.getElementById("back-button");
 
 	minAge.addEventListener("input" , () => {
 		agevalue.textContent = minAge.value;
@@ -27,8 +28,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	saveButton.addEventListener("click", () => {
 		makeRequest();
+		window.location.href="/dashboard/"
 	});
 
+	backButton.addEventListener("click", () => {
+		window.location.href="/dashboard/"
+	});
 
 
 
@@ -40,6 +45,9 @@ function makeRequest() {
 	const form_data = {
 		min_age: document.querySelector('input[name="min_age"]').value,
 		max_age: document.querySelector('input[name="max_age"]').value,
+		distance: document.querySelector('input[name="distance"]').value,
+		intentions: document.querySelector('#intent').value,
+		gender: document.querySelector('#gender').value
 	};
 
 	fetch("/preferences/", {
