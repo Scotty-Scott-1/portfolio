@@ -33,6 +33,7 @@ class Users(Base):
     intentions = Column(String(200))
     user_preferences = Column(Integer)
     user_name = Column(String(50), nullable=False, unique=True )
+    bio = Column(Text)
 
 class User_preferences(Base):
     __tablename__ = "User_preferences"
@@ -63,4 +64,10 @@ class Messages(Base):
     receiver_id = Column(Integer, ForeignKey(Users.id))
     content = Column(Text)
     sent_at = Column(DateTime, default=datetime.utcnow)
+
+class User_pics(Base):
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    file_name = Column(String(500))
+    path = Column(String(500))
+    user_id = Column(Integer, ForeignKey(Users.id))
 Base.metadata.create_all(engine)
