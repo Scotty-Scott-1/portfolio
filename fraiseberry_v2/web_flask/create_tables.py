@@ -66,6 +66,7 @@ class Messages(Base):
     sent_at = Column(DateTime, default=datetime.utcnow)
 
 class User_pics(Base):
+    __tablename__ = "User_pics"
     id = Column(Integer, primary_key=True, autoincrement=True)
     file_name = Column(String(500))
     path = Column(String(500))
