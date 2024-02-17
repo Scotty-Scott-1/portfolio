@@ -25,7 +25,6 @@
 				<p>email</p>
 				<p>Username</p>
 				<p>Password</p>
-				<p>Intention</p>
 				<p>Gender</p>
 			</div>
 			<div class="input-box">
@@ -35,10 +34,6 @@
 				<input type="text" placeholder="example@example.com" name="email">
 				<input type="text" placeholder="enter a username" name="user_name">
 				<input type="password" name="password">
-				<select class ="input" name="intent" id="intent">
-					<option value="Romantic relationship">Romantic relationship</option>
-					<option value="Friendship">Friendship</option>
-				</select>
 				<select class="input" name="gender" id="gender">
 					<option value="Male">Male</option>
 					<option value="Female">Female</option>
@@ -61,7 +56,6 @@
 							email: document.querySelector('input[name="email"]').value,
 							user_name: document.querySelector('input[name="user_name"]').value,
 							user_password: document.querySelector('input[name="password"]').value,
-							intentions: document.querySelector('#intent').value,
 							gender: document.querySelector('#gender').value
 						};
 

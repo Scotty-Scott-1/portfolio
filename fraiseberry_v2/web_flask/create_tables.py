@@ -30,9 +30,7 @@ class Users(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     last_updated_at = Column(DateTime, default=datetime.utcnow)
     next_update = Column(DateTime, default=datetime.utcnow)
-    intentions = Column(String(200))
-    user_preferences = Column(Integer)
-    user_name = Column(String(50), nullable=False, unique=True )
+    user_name = Column(String(50), nullable=False, unique=True)
     bio = Column(Text)
 
 class User_preferences(Base):

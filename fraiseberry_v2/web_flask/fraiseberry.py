@@ -3,7 +3,7 @@
 starts a Flask web application
 """
 
-from flask import Flask, render_template, request, redirect, session as logged_in_session
+from flask import Flask, render_template, request, redirect, session as logged_in_session, send_file
 from datetime import datetime
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, Date, DateTime, Boolean, Enum, Text, ForeignKey
@@ -15,6 +15,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from create_tables import Users
 from create_tables import User_preferences
 from sys import argv
+
+import os
+import cv2
+
 
 
 
@@ -110,12 +114,14 @@ def preferences():
             new_preferences.gender = form_data["gender"]
             new_preferences.intentions = form_data["intentions"]
             new_preferences.user_id = logged_in_session.get("user_id")
-            print("AAAAAAAAAAAAAAAAAAAAAAAA")
-            print(logged_in_session.get("user_id"))
+
             session.add(new_preferences)
             session.commit()
             session.close()
+
             return {"Success": "created new preferences"}
+
+    
 
 
 if __name__ == '__main__':
