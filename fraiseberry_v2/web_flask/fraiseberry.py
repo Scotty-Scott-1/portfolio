@@ -13,8 +13,9 @@ from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from create_tables import Users
-from create_tables import User_preferences
+from create_tables import User_preferences, User_pics
 from sys import argv
+import base64
 
 import os
 import cv2
@@ -121,8 +122,35 @@ def preferences():
 
             return {"Success": "created new preferences"}
 
-    
+@app.route('/camera/', strict_slashes=False, methods=['GET', 'POST'])
+def camera():
+        if request.method == "GET":
+            return render_template('get_pic.html')
+        if request.method == "POST":
+            data = request.json
 
+            _, encoded = data["ImageData"].split(",", 1)
+            image_bytes = base64.b64decode(encoded)
+
+            session = Session()
+            user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
+
+            filename = "static/images/user_pics/" + user.user_name + str(datetime.utcnow()) + ".png"
+
+            with open(filename, "wb") as file:
+                file.write(image_bytes)
+
+            new_user_pics = User_pics()
+            new_user_pics.user_id = user.id
+            new_user_pics.file_name = filename
+            new_user_pics.path = "/home/solo/working_directories/portfolio/fraiseberry_v2/web_flask/static/images/user_pics/" + filename
+
+            session.add(new_user_pics)
+            session.commit()
+
+            session.close()
+
+            return {"success": "saved file"}
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')

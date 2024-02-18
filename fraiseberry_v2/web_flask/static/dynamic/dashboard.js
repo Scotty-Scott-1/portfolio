@@ -2,6 +2,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 	const popbutton = document.getElementById("pp");
 	const pref_icon = document.getElementById("prefs");
+	const camera = document.getElementById("camera");
 
 	popbutton.addEventListener("click", () => {
 		showPopover();
@@ -10,6 +11,12 @@ document.addEventListener("DOMContentLoaded", function() {
 	pref_icon.addEventListener("click", () => {
 		window.location.href="/preferences/"
 	});
+
+	camera.addEventListener("click", () => {
+		window.location.href="/camera/"
+	});
+
+
 });
 
 
