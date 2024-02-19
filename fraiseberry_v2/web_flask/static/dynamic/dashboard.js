@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const popbutton = document.getElementById("pp");
 	const pref_icon = document.getElementById("prefs");
 	const camera = document.getElementById("camera");
+	let profile_pic = document.getElementById("pp");
 
 	popbutton.addEventListener("click", () => {
 		showPopover();
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		window.location.href="/camera/"
 	});
 
+	profile_pic.src = ""
 
 });
 

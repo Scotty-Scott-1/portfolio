@@ -36,7 +36,11 @@ header h1{
 }
 
 
-
+#corner_pic {
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
+}
 
 .mail {
 	justify-content: flex-start;
@@ -108,4 +112,5 @@ footer .icon {
 ul li {
 	padding-right: 5px;
 	justify-content: center;
+	margin-right: 10px;
 	}

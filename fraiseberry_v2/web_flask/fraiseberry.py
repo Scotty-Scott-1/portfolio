@@ -89,10 +89,11 @@ def dashboard():
     session = Session()
     user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
     profile_pic = session.query(User_pics).filter_by(user_id=logged_in_session.get("user_id")).order_by(User_pics.id.desc()).first()
+    session.close()
     if profile_pic:
-        return render_template('dashboard.html', user=user, profile_pic = profile_pic.path)
-    else:
-        return render_template('dashboard.html', user=user)
+        return render_template('dashboard2.html', user=user, profile_pic=profile_pic.path)
+    return render_template('dashboard.html', user=user)
+
 @app.route('/preferences/', strict_slashes=False, methods=['GET', 'POST'])
 def preferences():
     session = Session()
