@@ -16,6 +16,7 @@ from create_tables import Users
 from create_tables import User_preferences, User_pics
 from sys import argv
 import base64
+import random
 
 import os
 import cv2
@@ -87,8 +88,11 @@ def signup():
 def dashboard():
     session = Session()
     user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
-    return render_template('dashboard.html', user=user)
-
+    profile_pic = session.query(User_pics).filter_by(user_id=logged_in_session.get("user_id")).order_by(User_pics.id.desc()).first()
+    if profile_pic:
+        return render_template('dashboard.html', user=user, profile_pic = profile_pic.path)
+    else:
+        return render_template('dashboard.html', user=user)
 @app.route('/preferences/', strict_slashes=False, methods=['GET', 'POST'])
 def preferences():
     session = Session()
@@ -135,15 +139,16 @@ def camera():
             session = Session()
             user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
 
-            filename = "static/images/user_pics/" + user.user_name + str(datetime.utcnow()) + ".png"
+            filename = "{}{}.png".format(user.user_name, random.random());
 
-            with open(filename, "wb") as file:
+            with open("static/images/user_pics/" + filename, "wb") as file:
                 file.write(image_bytes)
 
             new_user_pics = User_pics()
             new_user_pics.user_id = user.id
             new_user_pics.file_name = filename
-            new_user_pics.path = "/home/solo/working_directories/portfolio/fraiseberry_v2/web_flask/static/images/user_pics/" + filename
+            new_user_pics.path = "static/images/user_pics/{}".format(filename)
+            print(new_user_pics.path)
 
             session.add(new_user_pics)
             session.commit()

@@ -21,8 +21,11 @@
 				<h1>Fraiseberry Home</h1>
 
 			</div>
-
-			<img src="../static/images/mailbox_icon.png" alt="" class="mail">
+			{% if profile_pic %}
+				<img src="{{ profile_pic }}" alt="" class="mail">
+			{% else %}
+				<img src="../static/images/mailbox_icon.png" alt="" class="mail">
+			{% endif %}
 
 			<div class="profilepic_icon">
 				<div class="popcontainter">
