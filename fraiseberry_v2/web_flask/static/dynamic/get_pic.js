@@ -41,10 +41,14 @@ document.addEventListener("DOMContentLoaded", function() {
 			body: JSON.stringify({ImageData: image.src}),
 			headers: {"Content-Type": "application/json"}
 		})
-		.then(response => response.json())
+		.then(response => {
+			response.json()
+			window.location.href="/dashboard/"
 		})
 		.catch(error => {
 			console.error("error saving image", error);
-		})
-	});
+		});
+	})
+
+});
 
