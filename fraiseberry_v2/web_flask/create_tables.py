@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from sqlalchemy import create_engine, Column, Integer, String, Sequence, Date, DateTime, Boolean, Enum, Text, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Sequence, Date, DateTime, Boolean, Enum, Text, ForeignKey, Float
 from sqlalchemy import MetaData, Sequence
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
@@ -32,6 +32,8 @@ class Users(Base):
     next_update = Column(DateTime, default=datetime.utcnow)
     user_name = Column(String(50), nullable=False, unique=True)
     bio = Column(Text)
+    longitude = Column(Float)
+    latitude = Column(Float)
 
 class User_preferences(Base):
     __tablename__ = "User_preferences"
