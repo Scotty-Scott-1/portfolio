@@ -71,4 +71,11 @@ class User_pics(Base):
     file_name = Column(String(500))
     path = Column(String(500))
     user_id = Column(Integer, ForeignKey(Users.id))
+
+class Location_preferences(Base):
+    __tablename__ = "Location_preferences"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey(Users.id))
+    department = Column(String(200))
+
 Base.metadata.create_all(engine)

@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const pref_icon = document.getElementById("prefs");
 	const camera = document.getElementById("camera");
 	let profile_pic = document.getElementById("pp");
+	const heartButton = document.getElementById("heart")
 
 	popbutton.addEventListener("click", () => {
 		showPopover();
@@ -18,6 +19,10 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 
 	profile_pic.src = ""
+
+	heartButton.addEventListener("click", () => {
+		window.location.href="/swipe/"
+	})
 
 });
 

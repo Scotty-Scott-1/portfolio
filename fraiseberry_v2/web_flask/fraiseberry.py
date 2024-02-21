@@ -52,10 +52,19 @@ def signin():
         user = session.query(Users).filter_by(user_name=form_data["user_name"]).first()
 
         if user and check_password_hash(user.user_password, form_data["user_password"]):
-            session.close()
             logged_in_session["user_id"] = user.id
-            return {"Success": "logged in: {}. User id: {}".format(user.user_name, user.id)}
+            user.latitude = form_data["latitude"]
+            user.longitude = form_data["longitude"]
+            session.commit()
+
+            result_user_name = user.user_name
+            result_user_id = user.id
+            session.close()
+
+
+            return {"Success": "logged in: {}. User id: {}".format(result_user_name, result_user_id)}
         else:
+            session.close()
             return {"Failed": "Username or password incorrect"}
 
 
@@ -157,6 +166,25 @@ def camera():
             session.close()
 
             return {"success": "saved file"}
+
+@app.route('/swipe/', strict_slashes=False, methods=['GET', 'POST'])
+def swipe():
+    userloggedin = logged_in_session.get("user_id")
+    usersession = Session()
+    prefs = usersession.query(User_preferences).filter_by(user_id=logged_in_session.get("user_id")).first()
+    print("\n\n\n\n")
+    print(prefs.gender)
+    print(prefs.min_age)
+    print(prefs.max_age)
+    print(prefs.distance)
+    print(userloggedin)
+    print("\n\n\n\n")
+    usersession.close()
+    session = Session()
+    user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
+    print(user.id)
+    return render_template('swipe.html')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
