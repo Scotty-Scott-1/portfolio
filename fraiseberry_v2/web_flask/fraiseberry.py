@@ -10,7 +10,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Sequence, Date, D
 from sqlalchemy import MetaData, Sequence
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
-from datetime import datetime
+from datetime import datetime, date
 from werkzeug.security import generate_password_hash, check_password_hash
 from create_tables import Users
 from create_tables import User_preferences, User_pics
@@ -55,6 +55,12 @@ def signin():
             logged_in_session["user_id"] = user.id
             user.latitude = form_data["latitude"]
             user.longitude = form_data["longitude"]
+
+            today = datetime.today()
+            age = datetime.strptime(str(user.date_of_birth), "%Y-%m-%d")
+            real_age = today.year - age.year - ((today.month, today.day) < (age.month, age.day))
+            user.age = real_age
+
             session.commit()
 
             result_user_name = user.user_name
@@ -90,6 +96,12 @@ def signup():
         new_user = Users(**form_data)
         with Session() as session:
             session.add(new_user)
+
+            today = datetime.today()
+            age = datetime.strptime(str(new_user.date_of_birth), "%Y-%m-%d")
+            real_age = today.year - age.year - ((today.month, today.day) < (age.month, age.day))
+            new_user.age = real_age
+
             session.commit()
             return {"Success": "created new user"}
 
@@ -169,21 +181,35 @@ def camera():
 
 @app.route('/swipe/', strict_slashes=False, methods=['GET', 'POST'])
 def swipe():
-    userloggedin = logged_in_session.get("user_id")
-    usersession = Session()
-    prefs = usersession.query(User_preferences).filter_by(user_id=logged_in_session.get("user_id")).first()
-    print("\n\n\n\n")
-    print(prefs.gender)
-    print(prefs.min_age)
-    print(prefs.max_age)
-    print(prefs.distance)
-    print(userloggedin)
-    print("\n\n\n\n")
-    usersession.close()
+
+    session = Session()
+    prefs = session.query(User_preferences).filter_by(user_id=logged_in_session.get("user_id")).first()
+    pref_gender = prefs.gender
+    pref_min_age = prefs.min_age
+    pref_max_age = prefs.max_age
+    pref_distance = prefs.distance
+    pref_intention = prefs.intentions
+    session.close()
+
     session = Session()
     user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
-    print(user.id)
-    return render_template('swipe.html')
+    this_user_age = user.age
+    this_user_user_name = user.user_name
+    session.close()
+
+    print("\n\n\n\n")
+    print("The preferred gender is {}. Aged between {} and {}. Living {}km from the user. The user is interested in {}. The user is {} years old. Their username is {}."
+          .format(pref_gender, pref_min_age, pref_max_age, pref_distance, pref_intention, this_user_age, this_user_user_name))
+    print("\n\n\n\n")
+
+    session = Session()
+    candiate_list = session.query(Users).filter_by(gender=pref_gender).all()
+    result = candiate_list
+    session.close()
+
+
+
+    return render_template('swipe.html', result=result)
 
 
 if __name__ == '__main__':

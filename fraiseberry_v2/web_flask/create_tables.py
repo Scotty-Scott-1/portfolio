@@ -34,6 +34,7 @@ class Users(Base):
     bio = Column(Text)
     longitude = Column(Float)
     latitude = Column(Float)
+    age = Column(Integer)
 
 class User_preferences(Base):
     __tablename__ = "User_preferences"

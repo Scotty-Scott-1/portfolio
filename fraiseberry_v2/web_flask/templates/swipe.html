@@ -12,7 +12,16 @@
 		<body class="container">
 			<header></header>
 			<main>
-
+			<ul>
+				{% for candidate in result %}
+					<li>{{ candidate.first_name }}
+						<ul>
+							<li>{{ candidate.age }}</li>
+							<li>{{ candidate.user_name }}</li>
+						</ul>
+					</li>
+				{% endfor %}
+			</ul>
 
 			</main>
 			<footer></footer>
