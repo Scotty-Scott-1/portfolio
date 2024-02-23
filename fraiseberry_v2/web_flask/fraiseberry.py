@@ -131,6 +131,13 @@ def preferences():
             preferences.intentions = form_data["intentions"]
             session.commit()
             session.close()
+
+            session = Session()
+            user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
+            user.is_active = True
+            session.commit()
+            session.close()
+
             return {"success": "updated exiting preferences"}
         else:
             form_data = request.json
@@ -143,6 +150,12 @@ def preferences():
             new_preferences.user_id = logged_in_session.get("user_id")
 
             session.add(new_preferences)
+            session.commit()
+            session.close()
+
+            session = Session()
+            user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
+            user.is_active = True
             session.commit()
             session.close()
 

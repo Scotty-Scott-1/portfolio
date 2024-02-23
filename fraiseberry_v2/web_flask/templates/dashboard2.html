@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 		<link rel='stylesheet' href="../static/dashboard.css">
-		<script src="../static/dynamic/dashboard.js"></script>
+		<script src="../static/dynamic/dashboard2.js"></script>
 
 		<title>Fraiserry dashboard {{ user.user_name }}</title>
 	</head>
@@ -30,6 +30,7 @@
 						<ul>
 							<li><a href="/" id="logout">Logout</a></li>
 							<li>logged in as {{ user.user_name }}</li>
+							<li id="is_active">{{ user.is_active }}</li>
 						</ul>
 					</section>
 				</div>

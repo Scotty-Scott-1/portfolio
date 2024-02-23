@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const camera = document.getElementById("camera");
 	let profile_pic = document.getElementById("pp");
 	const heartButton = document.getElementById("heart")
+	const isActive = document.getElementById("is_active")
 
 	popbutton.addEventListener("click", () => {
 		showPopover();
@@ -21,7 +22,11 @@ document.addEventListener("DOMContentLoaded", function() {
 	profile_pic.src = ""
 
 	heartButton.addEventListener("click", () => {
-		alert("update your profile pic")
+		if (isActive.textContent === "False") {
+			alert("Update your preferences")
+			return
+		}
+		window.location.href="/swipe/"
 	})
 
 });
