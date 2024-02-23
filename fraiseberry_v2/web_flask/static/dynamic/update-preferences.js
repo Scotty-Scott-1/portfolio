@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	saveButton.addEventListener("click", () => {
 		makeRequest();
-		window.location.href="/dashboard/"
 	});
 
 	backButton.addEventListener("click", () => {
@@ -58,9 +57,10 @@ function makeRequest() {
 	})
 
 	.then(response => response.json())
-	.then(data => {;
+	.then(data => {
 		console.log(data);
-		alert("prefernces updated")
+		alert("prefernces updated");
+		window.location.href="/dashboard/"
 	})
 	.catch(error => console.error('Error:', error));
 }
