@@ -224,6 +224,15 @@ def swipe():
 
     return render_template('swipe.html', result=result)
 
+@app.route('/update-user-info/', strict_slashes=False, methods=['GET', 'POST'])
+def update_user_info():
+
+    session = Session()
+    user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
+    session.close()
+
+    return render_template('update_user_info.html', user=user)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')

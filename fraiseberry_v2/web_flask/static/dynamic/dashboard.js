@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const camera = document.getElementById("camera");
 	let profile_pic = document.getElementById("pp");
 	const heartButton = document.getElementById("heart")
+	const userIcon = document.getElementById("user_icon");
 
 	popbutton.addEventListener("click", () => {
 		showPopover();
@@ -23,6 +24,10 @@ document.addEventListener("DOMContentLoaded", function() {
 	heartButton.addEventListener("click", () => {
 		alert("update your profile pic")
 	})
+
+	userIcon.addEventListener("click", () => {
+		window.location.href="/update-user-info/"
+	});
 
 });
 
