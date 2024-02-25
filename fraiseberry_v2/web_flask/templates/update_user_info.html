@@ -18,7 +18,7 @@
 
 			<div id="bio_section">
 				<p id="bio_label">Bio</p>
-				<textarea name="" id="bio" cols="30" rows="5"></textarea>
+				<textarea name="" id="bio" cols="30" rows="5">{{ user.bio }}</textarea>
 				<br><br>
 			</div>
 
@@ -35,10 +35,10 @@
 				<div class="input-box">
 
 					<input type="text" value="{{ user.first_name }}" id="first_name">
-					<input type="text" value="{{ user.last_name }}">
-					<input type="date" value="{{ user.date_of_birth }}">
-					<input type="text" value="{{ user.email }}">
-					<input type="text" value="{{ user.user_name }}">
+					<input type="text" value="{{ user.last_name }}" id="last_name">
+					<input type="date" value="{{ user.date_of_birth }}" id="date_of_birth">
+					<input type="text" value="{{ user.email }}" id="email">
+					<input type="text" value="{{ user.user_name }}" id="user_name">
 					<select class ="input" name="intent" id="gender">
 						<option value="Male" {% if user.gender == "Male" %} selected {% endif %}>Male</option>
 						<option value="Female" {% if user.gender == "Female" %} selected {% endif %}>Female</option>

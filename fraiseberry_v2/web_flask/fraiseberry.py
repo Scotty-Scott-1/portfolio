@@ -226,12 +226,29 @@ def swipe():
 
 @app.route('/update-user-info/', strict_slashes=False, methods=['GET', 'POST'])
 def update_user_info():
+    if request.method == "GET":
+        session = Session()
+        user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
+        session.close()
+        return render_template('update_user_info.html', user=user)
+    if request.method == "POST":
+        form_data = request.json
+        session = Session()
+        user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
 
-    session = Session()
-    user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
-    session.close()
+        user.first_name = form_data["first_name"]
+        user.last_name = form_data["last_name"]
+        user.date_of_birth = form_data["date_of_birth"]
+        user.email = form_data["email"]
+        user.user_name = form_data["user_name"]
+        user.gender = form_data["gender"]
+        user.bio = form_data["bio"]
 
-    return render_template('update_user_info.html', user=user)
+        session.commit()
+        session.close()
+
+        return {"success": "updated user info"}
+
 
 
 if __name__ == '__main__':
