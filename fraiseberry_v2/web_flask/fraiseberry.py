@@ -227,8 +227,9 @@ def swipe():
         if user_prefs and user_prefs.intentions == pref_intention:
             result.append(candidate)
 
+    result2 = []
     print("\n\n")
-    print("the user's location is {}, {}. Their username is {}".format(this_user_latitude, this_user_longitude, this_user_user_name))
+    print("the user's location is {}, {}. Their username is {}. The max distance this user wants is {}.".format(this_user_latitude, this_user_longitude, this_user_user_name, pref_distance))
     for candidate1 in result:
         print("the candiates location is {} {}. Their username is {}.".format(candidate1.latitude, candidate1.longitude, candidate1.user_name))
         candidate_location = "{}, {}".format(candidate1.latitude, candidate1.longitude)
@@ -236,12 +237,15 @@ def swipe():
         distance = geodesic(candidate_location, user_location).kilometers
         real_distance = int(distance)
         print("distnace = {}".format(real_distance))
+        if real_distance <= pref_distance:
+            result2.append(candidate1)
     print("\n\n")
+
     session.close()
 
 
 
-    return render_template('swipe.html', result=result, distance=real_distance)
+    return render_template('swipe.html', result=result2, distance=real_distance)
 
 @app.route('/update-user-info/', strict_slashes=False, methods=['GET', 'POST'])
 def update_user_info():
