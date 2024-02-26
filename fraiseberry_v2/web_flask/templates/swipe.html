@@ -14,10 +14,10 @@
 			<main>
 			<ul>
 				{% for candidate in result %}
-					<li>{{ candidate.first_name }}
+					<li>{{ candidate.first_name }}, {{ candidate.age }}
 						<ul>
-							<li>{{ candidate.age }}</li>
 							<li>{{ candidate.user_name }}</li>
+							<li>{{ candidate.bio }}</li>
 						</ul>
 					</li>
 				{% endfor %}

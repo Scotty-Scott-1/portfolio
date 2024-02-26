@@ -216,8 +216,13 @@ def swipe():
     print("\n\n\n\n")
 
     session = Session()
-    candiate_list = session.query(Users).filter_by(gender=pref_gender).all()
-    result = candiate_list
+    candiate_list = session.query(Users).filter_by(gender=pref_gender).filter(Users.age <= pref_max_age).filter(Users.age >= pref_min_age).all()
+    result = []
+    for candidate in candiate_list:
+        user_prefs = session.query(User_preferences).filter_by(user_id=candidate.id).first()
+        if user_prefs and user_prefs.intentions == pref_intention:
+            result.append(candidate)
+
     session.close()
 
 
