@@ -17,6 +17,7 @@ from create_tables import User_preferences, User_pics
 from sys import argv
 import base64
 import random
+from geopy.distance import geodesic
 
 import os
 import cv2
@@ -208,11 +209,14 @@ def swipe():
     user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
     this_user_age = user.age
     this_user_user_name = user.user_name
+    this_user_latitude = user.latitude
+    this_user_longitude = user.longitude
     session.close()
 
     print("\n\n\n\n")
     print("The preferred gender is {}. Aged between {} and {}. Living {}km from the user. The user is interested in {}. The user is {} years old. Their username is {}."
           .format(pref_gender, pref_min_age, pref_max_age, pref_distance, pref_intention, this_user_age, this_user_user_name))
+
     print("\n\n\n\n")
 
     session = Session()
@@ -223,11 +227,21 @@ def swipe():
         if user_prefs and user_prefs.intentions == pref_intention:
             result.append(candidate)
 
+    print("\n\n")
+    print("the user's location is {}, {}. Their username is {}".format(this_user_latitude, this_user_longitude, this_user_user_name))
+    for candidate1 in result:
+        print("the candiates location is {} {}. Their username is {}.".format(candidate1.latitude, candidate1.longitude, candidate1.user_name))
+        candidate_location = "{}, {}".format(candidate1.latitude, candidate1.longitude)
+        user_location = "{}, {}".format(this_user_latitude ,this_user_longitude)
+        distance = geodesic(candidate_location, user_location).kilometers
+        real_distance = int(distance)
+        print("distnace = {}".format(real_distance))
+    print("\n\n")
     session.close()
 
 
 
-    return render_template('swipe.html', result=result)
+    return render_template('swipe.html', result=result, distance=real_distance)
 
 @app.route('/update-user-info/', strict_slashes=False, methods=['GET', 'POST'])
 def update_user_info():
