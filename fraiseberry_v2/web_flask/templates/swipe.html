@@ -5,23 +5,33 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 		<link rel='stylesheet' href="../static/swipe.css">
 		<script src="../static/dynamic/swipe.js"></script>
-
+		<script src="https://cdn.lordicon.com/lordicon.js"></script>
 		<title>Get started</title>
 	</head>
 
 		<body class="container">
 			<header></header>
+
 			<main>
-			<ul>
 				{% for candidate in result %}
-					<li>{{ candidate.first_name }}, {{ candidate.age }}, {{ distance[candidate.user_name] }}km
-						<ul>
-							<li>{{ candidate.user_name }}</li>
-							<li>{{ candidate.bio }}</li>
-						</ul>
-					</li>
-				{% endfor %}
-			</ul>
+				<lord-icon
+					src="https://cdn.lordicon.com/xjvrxoon.json"
+					trigger="click"
+					style="width:100px;height:100px">
+				</lord-icon>
+				<img src="../{{ candidate.profile_pic_path}}" alt="" id="pp">
+
+				<lord-icon
+					src="https://cdn.lordicon.com/dangivhk.json"
+					trigger="click"
+					style="width:100px;height:100px">
+				</lord-icon>
+				<div id="card_info">
+					<p>{{ candidate.first_name }}, {{ candidate.age }}, {{ distance[candidate.user_name] }}km</p>
+					<p>{{ candidate.user_name }}</p>
+					<p>{{ candidate.bio }}</p>
+				</div>
+					{% endfor %}
 
 			</main>
 			<footer></footer>
