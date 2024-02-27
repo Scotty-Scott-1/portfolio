@@ -187,6 +187,7 @@ def camera():
             print(new_user_pics.path)
 
             session.add(new_user_pics)
+            user.profile_pic_path = new_user_pics.path
             session.commit()
 
             session.close()
@@ -227,6 +228,7 @@ def swipe():
         if user_prefs and user_prefs.intentions == pref_intention:
             result.append(candidate)
 
+    distance_dict = {}
     result2 = []
     print("\n\n")
     print("the user's location is {}, {}. Their username is {}. The max distance this user wants is {}.".format(this_user_latitude, this_user_longitude, this_user_user_name, pref_distance))
@@ -239,13 +241,11 @@ def swipe():
         print("distnace = {}".format(real_distance))
         if real_distance <= pref_distance:
             result2.append(candidate1)
+            distance_dict[candidate1.user_name] = real_distance
+
     print("\n\n")
-
     session.close()
-
-
-
-    return render_template('swipe.html', result=result2, distance=real_distance)
+    return render_template('swipe.html', result=result2, distance=distance_dict)
 
 @app.route('/update-user-info/', strict_slashes=False, methods=['GET', 'POST'])
 def update_user_info():

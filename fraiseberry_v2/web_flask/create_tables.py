@@ -35,6 +35,7 @@ class Users(Base):
     longitude = Column(Float)
     latitude = Column(Float)
     age = Column(Integer)
+    profile_pic_path = Column(String(500))
 
 class User_preferences(Base):
     __tablename__ = "User_preferences"
