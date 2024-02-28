@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime, date
 from werkzeug.security import generate_password_hash, check_password_hash
 from create_tables import Users
-from create_tables import User_preferences, User_pics
+from create_tables import User_preferences, User_pics, Likes
 from sys import argv
 import base64
 import random
@@ -197,55 +197,113 @@ def camera():
 @app.route('/swipe/', strict_slashes=False, methods=['GET', 'POST'])
 def swipe():
 
-    session = Session()
-    prefs = session.query(User_preferences).filter_by(user_id=logged_in_session.get("user_id")).first()
-    pref_gender = prefs.gender
-    pref_min_age = prefs.min_age
-    pref_max_age = prefs.max_age
-    pref_distance = prefs.distance
-    pref_intention = prefs.intentions
-    session.close()
+    if request.method == "GET":
+        session = Session()
+        prefs = session.query(User_preferences).filter_by(user_id=logged_in_session.get("user_id")).first()
+        pref_gender = prefs.gender
+        pref_min_age = prefs.min_age
+        pref_max_age = prefs.max_age
+        pref_distance = prefs.distance
+        pref_intention = prefs.intentions
+        session.close()
 
-    session = Session()
-    user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
-    this_user_age = user.age
-    this_user_user_name = user.user_name
-    this_user_latitude = user.latitude
-    this_user_longitude = user.longitude
-    session.close()
+        session = Session()
+        user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
+        this_user_age = user.age
+        this_user_user_name = user.user_name
+        this_user_latitude = user.latitude
+        this_user_longitude = user.longitude
+        session.close()
 
-    print("\n\n\n\n")
-    print("The preferred gender is {}. Aged between {} and {}. Living {}km from the user. The user is interested in {}. The user is {} years old. Their username is {}."
-          .format(pref_gender, pref_min_age, pref_max_age, pref_distance, pref_intention, this_user_age, this_user_user_name))
+        print("\n\n\n\n")
+        print("The preferred gender is {}. Aged between {} and {}. Living {}km from the user. The user is interested in {}. The user is {} years old. Their username is {}."
+            .format(pref_gender, pref_min_age, pref_max_age, pref_distance, pref_intention, this_user_age, this_user_user_name))
 
-    print("\n\n\n\n")
+        print("\n\n\n\n")
 
-    session = Session()
-    candiate_list = session.query(Users).filter_by(gender=pref_gender).filter(Users.age <= pref_max_age).filter(Users.age >= pref_min_age).all()
-    result = []
-    for candidate in candiate_list:
-        user_prefs = session.query(User_preferences).filter_by(user_id=candidate.id).first()
-        if user_prefs and user_prefs.intentions == pref_intention:
-            result.append(candidate)
+        session = Session()
+        candiate_list = session.query(Users).filter_by(gender=pref_gender).filter(Users.age <= pref_max_age).filter(Users.age >= pref_min_age).all()
+        result = []
+        for candidate in candiate_list:
+            user_prefs = session.query(User_preferences).filter_by(user_id=candidate.id).first()
+            if user_prefs and user_prefs.intentions == pref_intention:
+                result.append(candidate)
 
-    distance_dict = {}
-    result2 = []
-    print("\n\n")
-    print("the user's location is {}, {}. Their username is {}. The max distance this user wants is {}.".format(this_user_latitude, this_user_longitude, this_user_user_name, pref_distance))
-    for candidate1 in result:
-        print("the candiates location is {} {}. Their username is {}.".format(candidate1.latitude, candidate1.longitude, candidate1.user_name))
-        candidate_location = "{}, {}".format(candidate1.latitude, candidate1.longitude)
-        user_location = "{}, {}".format(this_user_latitude ,this_user_longitude)
-        distance = geodesic(candidate_location, user_location).kilometers
-        real_distance = int(distance)
-        print("distnace = {}".format(real_distance))
-        if real_distance <= pref_distance:
-            result2.append(candidate1)
-            distance_dict[candidate1.user_name] = real_distance
+        result1 = []
 
-    print("\n\n")
-    session.close()
-    return render_template('swipe.html', result=result2, distance=distance_dict)
+
+        session = Session()
+        user_exisiting_likes = session.query(Likes).filter_by(user_1_id=logged_in_session.get("user_id")).all()
+        for candidate1 in result:
+            found = False
+            for like in user_exisiting_likes:
+                if like.user_2_id == candidate1.id:
+                    found = True
+                    break
+            if not found:
+                result1.append(candidate1)
+
+
+        distance_dict = {}
+        result2 = []
+        print("\n\n")
+        print("the user's location is {}, {}. Their username is {}. The max distance this user wants is {}.".format(this_user_latitude, this_user_longitude, this_user_user_name, pref_distance))
+        for candidate1 in result1:
+            print("the candiates location is {} {}. Their username is {}.".format(candidate1.latitude, candidate1.longitude, candidate1.user_name))
+            candidate_location = "{}, {}".format(candidate1.latitude, candidate1.longitude)
+            user_location = "{}, {}".format(this_user_latitude ,this_user_longitude)
+            distance = geodesic(candidate_location, user_location).kilometers
+            real_distance = int(distance)
+            print("distnace = {}".format(real_distance))
+            if real_distance <= pref_distance:
+                result2.append(candidate1)
+                distance_dict[candidate1.user_name] = real_distance
+
+
+        print("result = ")
+        for a in result:
+            print(a.user_name)
+
+        print("result 1 = ")
+        for a in result1:
+            print(a.user_name)
+
+
+        print("result 2 = ")
+        for a in result2:
+            print(a.user_name)
+
+
+
+
+        print("\n\n")
+        session.close()
+        return render_template('swipe.html', result=result2, distance=distance_dict)
+
+    elif request.method == "POST":
+        form_data = request.json
+
+        print("\n\n\n")
+        print(form_data)
+        session = Session()
+        user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
+        session.close()
+
+        session = Session()
+        likee = session.query(Users).filter_by(user_name=form_data["canidate_user_name"]).first()
+        new_like = Likes()
+        new_like.user_1_id = logged_in_session.get("user_id")
+        new_like.user_2_id = likee.id
+        new_like.is_matched = False
+        session.add(new_like)
+        session.commit()
+        session.close()
+
+        print("\n\n\n")
+
+        return {"success": "created a like"}
+
+
 
 @app.route('/update-user-info/', strict_slashes=False, methods=['GET', 'POST'])
 def update_user_info():
