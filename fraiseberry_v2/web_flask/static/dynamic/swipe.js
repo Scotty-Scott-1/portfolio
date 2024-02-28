@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						index = 0;
 						alert("Your search results are delepeted. Swipe again or widen your search")
 						window.location.href = '/dashboard/';
+
 					}
 					show(index);
 					console.log(index);
@@ -23,6 +24,8 @@ document.addEventListener("DOMContentLoaded", function() {
 					index++;
 					if (index >= candidates.length) {
 						index = 0;
+						alert("Your search results are delepeted. Swipe again or widen your search")
+						window.location.href = '/dashboard/';
 					}
 					show(index);
 					console.log(index);
