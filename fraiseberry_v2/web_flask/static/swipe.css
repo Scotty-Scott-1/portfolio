@@ -7,14 +7,57 @@
 	align-items: center;
 }
 
-#pp {
-	border-radius: 10%;
-	height: 50vh;
+.card {
+	height: 60vh;
 	width: 50vh;
+	border: 3px;
+	border-style: solid;
+	border-color: black;
+	background-color: azure;
+	text-align: center;
+	display: none;
 }
 
+.card.active {
+	display: block;
+}
+
+
+
+
+#pp {
+	border-radius: 10%;
+	height: 70%;
+	width: 98%;
+	margin-top: 2px;
+}
+
+#icons {
+	display: flex;
+	flex-direction: row;
+	height: auto;
+	width: auto;
+	text-align: center;
+
+}
+
+#no {
+	margin-left: 20%;
+	margin-right: 20%;
+
+}
+
+#yes {
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+
+
+
 #card_info {
-	margin-left: 100px;
+	margin-left: 0;
+
 }
 
 
