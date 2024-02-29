@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-		<link rel='stylesheet' href="../static/swipe.css">
-		<script src="../static/dynamic/swipe.js"></script>
+		<link rel='stylesheet' href="../static/new_match.css">
+		<script src="../static/dynamic/new_match.js"></script>
 		<script src="https://cdn.lordicon.com/lordicon.js"></script>
 		<title>Get started</title>
 	</head>
@@ -13,31 +13,22 @@
 			<header></header>
 
 			<main>
-					<div class="card">
-						
-						<img src="../{{ candidate.profile_pic_path }}" alt="" id="pp" data-pp="">
-						<div id="icons">
-							<lord-icon id="no"
-								src="https://cdn.lordicon.com/xjvrxoon.json"
-								trigger="loop"
-								delay="3000"
-								style="width:60px;height:60px">
-							</lord-icon>
-							<lord-icon id="yes"
-								src="https://cdn.lordicon.com/dangivhk.json"
-								trigger="loop"
-								delay="3000"
-								style="width:60px;height:60px">
-							</lord-icon>
-						</div>
+				<div id="congrats">
+					<lord-icon
+						src="https://cdn.lordicon.com/cqofjexf.json"
+						trigger="loop"
+						delay="1000"
+						style="width:250px;height:250px">
+					</lord-icon>
+					<h3>Congratulations. You matched with {{ name }}</h3>
+				</div>
 
-						<div id="card_info">
-							<p id="card_info_1">{{ candidate.first_name }}, {{ candidate.age }}, {{ distance[candidate.user_name] }}km</p>
-							<p id="card_info_2">{{ candidate.user_name }}</p>
-							<p id="card_info_3">{{ candidate.bio }}</p>
-						</div>
+					<div class="card">
+						<img src="../{{ profile_pic }}" alt="" id="pp" data-pp="">
 					</div>
-					{% endfor%}
+					<div>
+						<p><a href="">Send a message</a> or <a href="swipe.html">continue your search</a></p>
+					</div>
 			</main>
 			<footer></footer>
 		</body>

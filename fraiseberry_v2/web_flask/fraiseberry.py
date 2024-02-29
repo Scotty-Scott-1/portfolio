@@ -3,7 +3,7 @@
 starts a Flask web application
 """
 
-from flask import Flask, render_template, request, redirect, session as logged_in_session, send_file
+from flask import Flask, render_template, request, redirect, session as logged_in_session, send_file, url_for
 from datetime import datetime
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, Date, DateTime, Boolean, Enum, Text, ForeignKey
@@ -283,40 +283,48 @@ def swipe():
     elif request.method == "POST":
         form_data = request.json
 
-        print("\n\n\n")
-        print(form_data)
         session = Session()
-        user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
-        session.close()
+        session1 = Session()
+        session2 = Session()
+        session3 = Session()
 
-        session = Session()
-        likee = session.query(Users).filter_by(user_name=form_data["canidate_user_name"]).first()
-        new_like = Likes()
-        new_like.user_1_id = logged_in_session.get("user_id")
-        new_like.user_2_id = likee.id
+        user = session1.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
+        likee = session2.query(Users).filter_by(user_name=form_data["canidate_user_name"]).first()
+        if likee:
+            new_like = Likes()
+            new_like.user_1_id = logged_in_session.get("user_id")
+            new_like.user_2_id = likee.id
 
-        """check if likee and has already liked the liker."""
-        likee_liked_user = session.query(Likes).filter_by(user_1_id=likee.id, user_2_id=logged_in_session.get("user_id")).first()
-        if likee_liked_user:
-            new_like.is_matched = True
-            likee_liked_user.is_matched = True
-            new_match = Matches()
-            new_match.user_1_id = logged_in_session.get("user_id")
-            new_match.user_2_id = likee.id
-            session.add(new_match)
-            print("\n\n\n")
-            print("CONGRATULATIONS: You have matched with {}".format(likee.first_name))
-            print("\n\n\n")
+            """check if likee and has already liked the liker."""
+            likee_liked_user = session3.query(Likes).filter_by(user_1_id=likee.id, user_2_id=logged_in_session.get("user_id")).first()
 
-        session.add(new_like)
-        session.commit()
-        session.close()
+            if likee_liked_user:
+                new_like.is_matched = True
+                likee_liked_user.is_matched = True
 
+                new_match = Matches()
+                new_match.user_1_id = logged_in_session.get("user_id")
+                new_match.user_2_id = likee.id
 
+                session.add(new_like)
+                session.add(new_match)
+                session.commit()
+                session.close()
 
-        print("\n\n\n")
+                print("\n\n\n")
+                print("CONGRATULATIONS: You have matched with {}".format(likee.first_name))
+                print("\n\n\n")
+                return {"success": "created a new match"}
 
-        return {"success": "created a like"}
+            else:
+                session.add(new_like)
+                session.commit()
+                session.close()
+                print("\n\n\n")
+
+                return {"success": "created a like"}
+
+        return {"error": "user not found"}
 
 
 
@@ -346,6 +354,14 @@ def update_user_info():
         return {"success": "updated user info"}
 
 
+@app.route('/new_match/', strict_slashes=False, methods=['GET'])
+def new_match():
+    session = Session()
+    likee = session.query(Users).filter_by(id=likee_id).first()
+    name = likee.first_name
+    profile_pic = likee.profile_pic_path
+    session.close()
+    return render_template('new_match.html', name=name,profile_pic=profile_pic)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')

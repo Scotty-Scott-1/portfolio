@@ -30,9 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
 						body: JSON.stringify(form_data),
 						headers: {"Content-Type": "application/json"}
 
-					})
+					});
 
-					.then(response => response.json());
 				});
 
 
