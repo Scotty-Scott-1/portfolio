@@ -58,6 +58,8 @@ class Matches(Base):
     match_id = Column(Integer, primary_key=True, autoincrement=True)
     user_1_id = Column(Integer, ForeignKey(Users.id))
     user_2_id = Column(Integer, ForeignKey(Users.id))
+    user_1_notified = Column(Boolean)
+    user_2_notified = Column(Boolean)
     created_at = Column(DateTime, default=datetime.utcnow)
 class Messages(Base):
     __tablename__ = "Messages"
