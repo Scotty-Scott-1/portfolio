@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime, date
 from werkzeug.security import generate_password_hash, check_password_hash
 from create_tables import Users
-from create_tables import User_preferences, User_pics, Likes
+from create_tables import User_preferences, User_pics, Likes, Matches
 from sys import argv
 import base64
 import random
@@ -294,10 +294,25 @@ def swipe():
         new_like = Likes()
         new_like.user_1_id = logged_in_session.get("user_id")
         new_like.user_2_id = likee.id
-        new_like.is_matched = False
+
+        """check if likee and has already liked the liker."""
+        likee_liked_user = session.query(Likes).filter_by(user_1_id=likee.id, user_2_id=logged_in_session.get("user_id")).first()
+        if likee_liked_user:
+            new_like.is_matched = True
+            likee_liked_user.is_matched = True
+            new_match = Matches()
+            new_match.user_1_id = logged_in_session.get("user_id")
+            new_match.user_2_id = likee.id
+            session.add(new_match)
+            print("\n\n\n")
+            print("CONGRATULATIONS: You have matched with {}".format(likee.first_name))
+            print("\n\n\n")
+
         session.add(new_like)
         session.commit()
         session.close()
+
+
 
         print("\n\n\n")
 
