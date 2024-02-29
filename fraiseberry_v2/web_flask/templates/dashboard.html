@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 		<link rel='stylesheet' href="../static/dashboard.css">
 		<script src="../static/dynamic/dashboard.js"></script>
+		<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 		<title>Fraiserry dashboard {{ user.user_name }}</title>
 	</head>
@@ -24,7 +25,12 @@
 				<img src="../static/images/mailbox_icon.png" alt="" class="mail">
 			<div class="profilepic_icon">
 				<div class="popcontainter">
-					<img src="../static/images/profilepic_icon.png" alt="" >
+					<lord-icon
+						src="https://cdn.lordicon.com/fmasbomy.json"
+						trigger="loop"
+						delay="5000"
+						style="width:50px;height:50px">
+					</lord-icon>
 					<button id="pp"></button>
 					<section id="popover">
 						<ul>
@@ -39,7 +45,12 @@
 			</header>
 			<main>
 				<div class="icon" id="camera">
-					<img src="../static/images/camera_icon.png">
+					<lord-icon
+						src="https://cdn.lordicon.com/bmlkvhui.json"
+						trigger="loop"
+						delay="5000"
+						style="width:70px;height:70px">
+					</lord-icon>
 				</div>
 				<div class="icon">
 					<img src="../static/images/network_icon.png">
@@ -47,11 +58,19 @@
 
 			</main>
 			<footer>
-				<div class="icon" class="user">
-					<img src="../static/images/user_icon.png" id="user_icon">
+				<div class="icon" class="user" id="user_icon">
+					<lord-icon
+						src="https://cdn.lordicon.com/dvqeipeg.json"
+						trigger="hover"
+						style="width:70px;height:70px">
+					</lord-icon>
 				</div>
 				<div class="icon" id="prefs">
-					<img src="../static/images/notes_icon.png">
+					<lord-icon
+						src="https://cdn.lordicon.com/zfzufhzk.json"
+						trigger="hover"
+						style="width:70px;height:70px">
+					</lord-icon>
 				</div>
 				<div class="icon">
 					<img src="../static/images/messages_icon.png">
