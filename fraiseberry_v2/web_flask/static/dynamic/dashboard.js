@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	let profile_pic = document.getElementById("pp");
 	const heartButton = document.getElementById("heart")
 	const userIcon = document.getElementById("user_icon");
+	const mailIcon = document.getElementById("notifications")
 
 	popbutton.addEventListener("click", () => {
 		showPopover();
@@ -27,6 +28,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	userIcon.addEventListener("click", () => {
 		window.location.href="/update-user-info/"
+	});
+
+	mailIcon.addEventListener("click", () => {
+		window.location.href="/new_match/"
 	});
 
 });

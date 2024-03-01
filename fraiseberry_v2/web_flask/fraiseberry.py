@@ -7,7 +7,7 @@ from flask import Flask, render_template, request, redirect, session as logged_i
 from datetime import datetime
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, Date, DateTime, Boolean, Enum, Text, ForeignKey
-from sqlalchemy import MetaData, Sequence
+from sqlalchemy import MetaData, Sequence, or_
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime, date
@@ -356,12 +356,27 @@ def update_user_info():
 
 @app.route('/new_match/', strict_slashes=False, methods=['GET'])
 def new_match():
-    session = Session()
-    likee = session.query(Users).filter_by(id=likee_id).first()
-    name = likee.first_name
-    profile_pic = likee.profile_pic_path
-    session.close()
-    return render_template('new_match.html', name=name,profile_pic=profile_pic)
+    if request.method == "GET":
+        this_user = logged_in_session.get("user_id")
+        with Session() as session:
+            match = session.query(Matches).filter(or_(Matches.user_1_id == this_user, Matches.user_2_id == this_user)).first()
+            if match.user_1_id == this_user and not match.user_1_notified:
+                likee = session.query(Users).filter_by(id=match.user_2_id).first()
+                match.user_1_notified == True
+            if match.user_2_id == this_user and not match.user_2_notified:
+                likee = session.query(Users).filter_by(id=match.user_1_id).first()
+                match.user_1_notified == True
+            name = likee.first_name
+            profile_pic = likee.profile_pic_path
+            return render_template('new_match.html', name=name, profile_pic=profile_pic)
+
+    print("\n\n\n")
+    print("redirected 2")
+    print("\n\n\n")
+    return redirect(url_for("dashboard"))
+
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
