@@ -314,7 +314,7 @@ def swipe():
                 print("\n\n\n")
                 print("CONGRATULATIONS: You have matched with {}".format(likee.first_name))
                 print("\n\n\n")
-                return {"success": "created a new match"}
+                return "New Match"
 
             else:
                 session.add(new_like)

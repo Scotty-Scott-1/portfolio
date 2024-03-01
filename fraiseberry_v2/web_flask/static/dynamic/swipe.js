@@ -30,6 +30,15 @@ document.addEventListener("DOMContentLoaded", function() {
 						body: JSON.stringify(form_data),
 						headers: {"Content-Type": "application/json"}
 
+					})
+					.then(result => {
+						return result.text();
+					})
+					.then(result2 => {
+						console.log(result2);
+						if (result2 == "New Match") {
+							window.location.href = '/new_match/';
+						}
 					});
 
 				});
