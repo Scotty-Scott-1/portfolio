@@ -12,11 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 				yes.addEventListener("click", () => {
 					index++;
-					if (index >= candidates.length) {
-						index = 0;
-						alert("Your search results are delepeted. Swipe again or widen your search")
-						window.location.href = '/dashboard/';
-					}
+
 					show(index);
 					console.log(index);
 
@@ -38,6 +34,11 @@ document.addEventListener("DOMContentLoaded", function() {
 						console.log(result2);
 						if (result2 == "New Match") {
 							window.location.href = '/new_match/';
+						}
+						if (index >= candidates.length && result2 != "New Match") {
+							index = 0;
+							alert("Your search results are delepeted. Swipe again or widen your search")
+							window.location.href = '/dashboard/';
 						}
 					});
 
