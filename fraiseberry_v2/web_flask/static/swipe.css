@@ -7,6 +7,12 @@
 	align-items: center;
 }
 
+#home {
+	position: fixed;
+	left: 0;
+	top: 0;
+}
+
 .card {
 	height: fit-content;
 	width: 50vh;
@@ -16,6 +22,7 @@
 	background-color: azure;
 	text-align: center;
 	display: none;
+	margin-top: 5px;
 }
 
 .card.active {

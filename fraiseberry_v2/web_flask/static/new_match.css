@@ -7,6 +7,12 @@
 	align-items: center;
 }
 
+#home {
+	position: fixed;
+	left: 0;
+	top: 0;
+}
+
 .card {
 	height: fit-content;
 	width: 50vh;

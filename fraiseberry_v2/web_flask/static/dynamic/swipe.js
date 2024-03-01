@@ -2,6 +2,11 @@
 document.addEventListener("DOMContentLoaded", function() {
 	const candidates = document.querySelectorAll(".card");
 	let index = 0;
+	const home = document.getElementById("home");
+
+	home.addEventListener("click", () => {
+		window.location.href = '/dashboard/';
+	});
 
 	function show(index) {
 		candidates.forEach((candidate, idx) => {
