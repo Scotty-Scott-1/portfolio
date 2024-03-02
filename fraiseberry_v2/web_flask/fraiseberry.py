@@ -355,22 +355,31 @@ def new_match():
         this_user = logged_in_session.get("user_id")
         with Session() as session:
             match = session.query(Matches).filter(or_(Matches.user_1_id == this_user, Matches.user_2_id == this_user)).order_by(desc(Matches.created_at)).first()
+            if match is None:
+                    print("\n\n\n")
+                    print("redirected as there are no matches")
+                    print("\n\n\n")
+                    return redirect(url_for("dashboard"))
             print("user 1: {}".format(match.user_1_id))
             print("user 2: {}".format(match.user_2_id))
             if match.user_1_id == this_user and not match.user_1_notified:
                 likee = session.query(Users).filter_by(id=match.user_2_id).first()
-                match.user_1_notified == True
+                match.user_1_notified = True
+                name = likee.first_name
+                profile_pic = likee.profile_pic_path
+                session.commit()
+                return render_template('new_match.html', name=name, profile_pic=profile_pic)
             if match.user_2_id == this_user and not match.user_2_notified:
                 likee = session.query(Users).filter_by(id=match.user_1_id).first()
-                match.user_1_notified == True
-            name = likee.first_name
-            profile_pic = likee.profile_pic_path
-            return render_template('new_match.html', name=name, profile_pic=profile_pic)
-
-    print("\n\n\n")
-    print("redirected 2")
-    print("\n\n\n")
-    return redirect(url_for("dashboard"))
+                match.user_2_notified = True
+                name = likee.first_name
+                profile_pic = likee.profile_pic_path
+                session.commit()
+                return render_template('new_match.html', name=name, profile_pic=profile_pic)
+        print("\n\n\n")
+        print("redirected as the user has been notified about the lastest passive match")
+        print("\n\n\n")
+        return redirect(url_for("dashboard"))
 
 
 
