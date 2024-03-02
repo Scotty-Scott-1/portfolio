@@ -19,6 +19,9 @@
 			</header>
 
 			<main>
+					{% if not result %}
+					<p>Your list of potential matches have has been depleted or no users match your preferences. Please consider widening your search</p>
+					{% endif %}
 					{% for candidate in result %}
 					<div class="card">
 						<img src="../{{ candidate.profile_pic_path }}" alt="" id="pp" data-pp="">
