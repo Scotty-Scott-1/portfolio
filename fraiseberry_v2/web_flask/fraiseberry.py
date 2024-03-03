@@ -381,7 +381,51 @@ def new_match():
         print("\n\n\n")
         return redirect(url_for("dashboard"))
 
+@app.route('/new_match_passive/', strict_slashes=False, methods=['GET'])
+def new_match_passive():
+    if request.method == "GET":
+        this_user = logged_in_session.get("user_id")
+        with Session() as session:
+            matches = session.query(Matches).filter(or_(Matches.user_1_id == this_user, Matches.user_2_id == this_user)).order_by(desc(Matches.created_at)).all()
+            if matches is None:
+                    print("\n\n\n")
+                    print("redirected as there are no matches")
+                    print("\n\n\n")
+                    return redirect(url_for("dashboard"))
 
+            names = []
+            profile_pics = []
+            my_dict = {}
+
+            for match in matches:
+
+                if match.user_1_id == this_user and not match.user_1_notified:
+                    likee = session.query(Users).filter_by(id=match.user_2_id).first()
+                    match.user_1_notified = True
+                    name = likee.first_name
+                    profile_pic = likee.profile_pic_path
+                    session.commit()
+                    names.append(name)
+                    profile_pics.append(profile_pic)
+                if match.user_2_id == this_user and not match.user_2_notified:
+                    likee = session.query(Users).filter_by(id=match.user_1_id).first()
+                    match.user_2_notified = True
+                    name = likee.first_name
+                    profile_pic = likee.profile_pic_path
+                    session.commit()
+                    names.append(name)
+                    profile_pics.append(profile_pic)
+
+            if names:
+                if profile_pics:
+                    zipped = zip(names, profile_pics)
+                    return render_template('new_match_passive.html', zipped=zipped)
+
+
+        print("\n\n\n")
+        print("redirected as the user has been notified about the lastest passive matches")
+        print("\n\n\n")
+        return redirect(url_for("dashboard"))
 
 
 if __name__ == '__main__':

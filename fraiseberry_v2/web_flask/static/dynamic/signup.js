@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					})
 
 					.then(response => response.json())
-					.then(data =>window.location.href = "/new_match/")
+					.then(data =>window.location.href = "/new_match_passive/")
 					.catch(error => console.error('Error:', error));
 				});
 
