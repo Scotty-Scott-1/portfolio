@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					})
 
 					.then(response => response.json())
-					.then(data =>window.location.href = "/dashboard")
+					.then(data =>window.location.href = "/new_match/")
 					.catch(error => console.error('Error:', error));
 				});
 
