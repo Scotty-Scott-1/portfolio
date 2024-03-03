@@ -273,12 +273,19 @@ def swipe():
         for a in result2:
             print(a.user_name)
 
+        shuffled_list = result2.copy()
+        random.shuffle(shuffled_list)
 
+        print("\n\n")
+        print("shuffled list")
+
+        for a in shuffled_list:
+            print(a.user_name)
 
 
         print("\n\n")
         session.close()
-        return render_template('swipe.html', result=result2, distance=distance_dict)
+        return render_template('swipe.html', result=shuffled_list, distance=distance_dict)
 
     elif request.method == "POST":
         form_data = request.json
