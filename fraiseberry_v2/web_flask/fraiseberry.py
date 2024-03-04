@@ -434,6 +434,41 @@ def new_match_passive():
         print("\n\n\n")
         return redirect(url_for("dashboard"))
 
+@app.route('/view_matches/', strict_slashes=False, methods=['GET'])
+def view_matches():
+    with Session() as session:
+        this_user = logged_in_session.get("user_id")
+        user = session.query(Users).filter_by(id=logged_in_session.get("user_id")).first()
+        matches = session.query(Matches).filter(or_(Matches.user_1_id == this_user, Matches.user_2_id == this_user)).order_by(desc(Matches.created_at)).all()
+        if matches is None:
+                print("\n\n\n")
+                print("redirected as there are no matches")
+                print("\n\n\n")
+                return redirect(url_for("dashboard"))
+        my_list = []
+
+
+        for match in matches:
+            if match.user_1_id == this_user:
+                likee = session.query(Users).filter_by(id=match.user_2_id).first()
+                my_list.append(likee)
+            if match.user_2_id == this_user:
+                likee = session.query(Users).filter_by(id=match.user_1_id).first()
+                my_list.append(likee)
+        distance_dict = {}
+        for candidate1 in my_list:
+            candidate_location = "{}, {}".format(candidate1.latitude, candidate1.longitude)
+            user_location = "{}, {}".format(user.latitude , user.longitude)
+            distance = geodesic(candidate_location, user_location).kilometers
+            real_distance = int(distance)
+            distance_dict[candidate1.user_name] = real_distance
+
+        return render_template('view_matches.html', result=my_list, user=user, distance=distance_dict)
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')

@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-		<link rel='stylesheet' href="../static/dashboard.css">
-		<script src="../static/dynamic/dashboard2.js"></script>
+		<link rel='stylesheet' href="../static/view_matches.css">
+		<script src="../static/dynamic/view_matches.js"></script>
 		<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 		<title>Fraiserry dashboard {{ user.user_name }}</title>
@@ -15,45 +15,41 @@
 		<body class="container">
 
 			<header>
-			</div>
-
-			<div class="fraise">
-				<img src="../static/images/icon.png" alt="">
-				<h1>Fraiseberry Home</h1>
-
-			</div>
-				<img src="../static/images/mailbox_icon.png" alt="" class="mail">
-			<div class="profilepic_icon">
-				<div class="popcontainter">
-					<img src="../{{ profile_pic }}" alt="" id="corner_pic">
-					<button id="pp"></button>
-					<section id="popover">
-						<ul>
-							<li><a href="/" id="logout">Logout</a></li>
-							<li>logged in as {{ user.user_name }}</li>
-							<li id="is_active">{{ user.is_active }}</li>
-						</ul>
-					</section>
-				</div>
-			</div>
-
-
-			</header>
-			<main>
-				<div class="icon" id="camera">
-					<lord-icon
-						src="https://cdn.lordicon.com/bmlkvhui.json"
+				<div>
+					<lord-icon id="home"
+						src="https://cdn.lordicon.com/epietrpn.json"
 						trigger="hover"
 						style="width:70px;height:70px">
 					</lord-icon>
 				</div>
-				<div class="icon" id="notifications">
-					<lord-icon
-						src="https://cdn.lordicon.com/nqisoomz.json"
-						trigger="hover"
-						style="width:80px;height:80px">
-					</lord-icon>
+
+
+			</header>
+			<main>
+				{% for candidate in result %}
+				<div class="card">
+					<img src="../{{ candidate.profile_pic_path }}" alt="" id="pp" data-pp="">
+					<div id="icons">
+						<lord-icon
+							src="https://cdn.lordicon.com/xekbkxul.json"
+							trigger="morph"
+							state="morph-trash-in"
+							style="width:60px;height:60px">
+						</lord-icon>
+						<lord-icon
+							src="https://cdn.lordicon.com/kiynvdns.json"
+							trigger="hover"
+							style="width:60px;height:60px">
+						</lord-icon>
+					</div>
+
+					<div id="card_info">
+						<p id="card_info_1">{{ candidate.first_name }}, {{ candidate.age }}, {{ distance[candidate.user_name] }}km</p>
+						<p id="card_info_2">{{ candidate.user_name }}</p>
+						<p id="card_info_3">{{ candidate.bio }}</p>
+					</div>
 				</div>
+				{% endfor %}
 
 			</main>
 			<footer>
@@ -71,7 +67,7 @@
 						style="width:70px;height:70px">
 					</lord-icon>
 				</div>
-				<div class="icon" id="message">
+				<div class="icon">
 					<lord-icon
 						src="https://cdn.lordicon.com/kiynvdns.json"
 						trigger="hover"

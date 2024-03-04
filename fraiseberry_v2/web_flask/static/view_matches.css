@@ -1,0 +1,120 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	background: linear-gradient(to bottom, #d6849c, #f3efe4);
+
+
+}
+
+header {
+	display: block;
+	height: 70px;
+}
+
+
+main {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+footer {
+	flex-grow: 1;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	bottom: 0;
+	position: fixed;
+	background-color: #cbd7dad3;
+}
+
+footer .icon {
+	display: flex;
+}
+
+
+#home {
+	position: fixed;
+	left: 0;
+	top: 0;
+}
+.card {
+	height: fit-content;
+	width: calc(33.33% - 20px);
+	border: 3px;
+	border-style: solid;
+	border-color: black;
+	background-color: azure;
+	text-align: center;
+	display: block;
+	margin: 5px;
+}
+
+
+
+	#pp {
+		border-radius: 10%;
+		height: 50vh;
+		width: 98%;
+		margin-top: 2px;
+	}
+
+	#icons {
+		display: flex;
+		flex-direction: row;
+		height: auto;
+		width: auto;
+		text-align: center;
+
+	}
+
+	#no {
+		margin-left: 20%;
+		margin-right: 20%;
+
+	}
+
+	#yes {
+		margin-left: 20%;
+		margin-right: 20%;
+	}
+
+
+
+
+	#card_info {
+		margin-left: 0;
+
+	}
+
+
+	@media only screen and (max-width: 1000px) {
+		.card {
+			height: fit-content;
+			width: calc(45% - 20px);
+			border: 3px;
+			border-style: solid;
+			border-color: black;
+			background-color: azure;
+			text-align: center;
+			display: block;
+			margin: 5px;
+		}
+
+	}
+
+
+	@media only screen and (max-width: 600px) {
+		.card {
+			height: fit-content;
+			width: calc(85% - 20px);
+			border: 3px;
+			border-style: solid;
+			border-color: black;
+			background-color: azure;
+			text-align: center;
+			display: block;
+			margin: 5px;
+		}
+
+	}
