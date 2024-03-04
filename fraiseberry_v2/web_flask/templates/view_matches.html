@@ -6,6 +6,9 @@
 		<link rel='stylesheet' href="../static/view_matches.css">
 		<script src="../static/dynamic/view_matches.js"></script>
 		<script src="https://cdn.lordicon.com/lordicon.js"></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
 
 		<title>Fraiserry dashboard {{ user.user_name }}</title>
 	</head>
@@ -29,6 +32,7 @@
 				{% for candidate in result %}
 				<div class="card">
 					<img src="../{{ candidate.profile_pic_path }}" alt="" id="pp" data-pp="">
+					<p id="card_info_1" class="marck-script-regular">{{ candidate.first_name }}, {{ candidate.age }}</p>
 					<div id="icons">
 						<lord-icon
 							src="https://cdn.lordicon.com/xekbkxul.json"
@@ -37,15 +41,14 @@
 							style="width:60px;height:60px">
 						</lord-icon>
 						<lord-icon
-							src="https://cdn.lordicon.com/kiynvdns.json"
-							trigger="hover"
-							style="width:60px;height:60px">
-						</lord-icon>
-					</div>
+						src="https://cdn.lordicon.com/kiynvdns.json"
+						trigger="hover"
+						style="width:60px;height:60px">
+					</lord-icon>
+				</div>
 
-					<div id="card_info">
-						<p id="card_info_1">{{ candidate.first_name }}, {{ candidate.age }}, {{ distance[candidate.user_name] }}km</p>
-						<p id="card_info_2">{{ candidate.user_name }}</p>
+				<div id="card_info">
+						<p id="card_info_2">@{{ candidate.user_name }}, {{ distance[candidate.user_name] }}km</p>
 						<p id="card_info_3">{{ candidate.bio }}</p>
 					</div>
 				</div>
