@@ -7,6 +7,7 @@
 	align-items: center;
 }
 
+
 #home {
 	position: fixed;
 	left: 0;
@@ -22,7 +23,7 @@
 	background-color: azure;
 	text-align: center;
 	display: none;
-	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .card.active {
@@ -67,8 +68,20 @@
 
 }
 
-
-@media only screen and (max-width: 600px) {
-
-
+#card_info_1 {
+	font-size: xx-large;
+	margin: 1px;
 }
+
+
+#card_info_3 {
+	display: block;
+	max-width: 100%;
+	overflow-y: auto;
+}
+
+.marck-script-regular {
+	font-family: "Marck Script", cursive;
+	font-weight: 400;
+	font-style: normal;
+  }
